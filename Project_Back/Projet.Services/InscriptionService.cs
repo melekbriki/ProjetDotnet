@@ -1,13 +1,11 @@
 ﻿using Projet.Entities;
-using Projet.Services.Interfaces;
 using Projet.BLL.Contract;
-using Projet.BLL;
 using System;
 using System.Collections.Generic;
 
 namespace Projet.Services
 {
-    public class InscriptionService : IInscriptionService
+    public class InscriptionService
     {
         private readonly IGenericBLL<Inscription> _bll;
 
@@ -16,9 +14,15 @@ namespace Projet.Services
             _bll = bll;
         }
 
-        public IEnumerable<Inscription> GetAll() => _bll.GetMany();
+        public IEnumerable<Inscription> GetAll()
+        {
+            return _bll.GetMany();
+        }
 
-        public Inscription GetById(int id) => _bll.GetById(id);
+        public Inscription GetById(int id)
+        {
+            return _bll.GetById(id);
+        }
 
         public void Add(Inscription inscription)
         {
@@ -29,7 +33,10 @@ namespace Projet.Services
         public void Delete(int id)
         {
             var inscription = _bll.GetById(id);
-            _bll.Delete(inscription);
+            if (inscription != null)
+            {
+                _bll.Delete(inscription);
+            }
         }
     }
 }

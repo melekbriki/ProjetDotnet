@@ -13,7 +13,8 @@ namespace Projet.DAL
             IRepository<Cours> coursRepo,
             IRepository<Soumission> soumissionRepo,
             IRepository<Inscription> inscriptionRepo,
-            IRepository<Devoir> devoirRepo
+            IRepository<Devoir> devoirRepo,
+            IRepository<Lecon> leconRepo
             )
 
         {
@@ -25,6 +26,8 @@ namespace Projet.DAL
             _repositories.Add(typeof(Soumission), soumissionRepo);
             _repositories.Add(typeof(Inscription), inscriptionRepo);
             _repositories.Add(typeof(Devoir), devoirRepo);
+            _repositories.Add(typeof(Lecon), leconRepo);
+
         }
 
         public IRepository GetRepository<T>() where T : class

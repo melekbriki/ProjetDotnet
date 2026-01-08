@@ -74,11 +74,21 @@ builder.Services.AddScoped<IRepository<Cours>, CoursRepository>();
 // --------------------
 builder.Services.AddScoped(typeof(IGenericBLL<Inscription>), typeof(GenericBLL<Inscription>));
 builder.Services.AddScoped<IRepository<Inscription>, InscriptionRepository>();
+builder.Services.AddScoped<InscriptionService>();
+
 
 
 builder.Services.AddScoped<DevoirService>();
 builder.Services.AddScoped(typeof(IGenericBLL<Devoir>), typeof(GenericBLL<Devoir>));
 builder.Services.AddScoped<IRepository<Devoir>, DevoirRepository>();
+
+
+// --------------------
+// Lecon
+// --------------------
+builder.Services.AddScoped<LeconService>();
+builder.Services.AddScoped(typeof(IGenericBLL<Lecon>), typeof(GenericBLL<Lecon>));
+builder.Services.AddScoped<IRepository<Lecon>, LeconRepository>();
 
 
 // --------------------
