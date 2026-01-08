@@ -14,5 +14,6 @@ namespace Projet.Services.Interfaces
         void Add(Soumission soumission);
         void Update(Soumission soumission);
         void Delete(int id);
+        void EnrollDevoir(int userId, int devoirId);
     }
 }

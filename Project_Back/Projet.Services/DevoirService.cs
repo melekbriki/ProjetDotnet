@@ -1,10 +1,11 @@
 ﻿using Projet.Entities;
 using Projet.BLL.Contract;
 using System.Collections.Generic;
+using Projet.Services.Interfaces;
 
 namespace Projet.Services
 {
-    public class DevoirService
+    public class DevoirService : IDevoirService
     {
         private readonly IGenericBLL<Devoir> _bll;
 
