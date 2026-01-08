@@ -16,7 +16,7 @@ var builder = WebApplication.CreateBuilder(args);
 // --------------------
 var Cnx = builder.Configuration.GetConnectionString("ConnectionString");
 builder.Services.AddDbContext<DataContext>(options =>
- options.UseSqlServer(Cnx, b => b.MigrationsAssembly("API")));
+    options.UseSqlServer(Cnx, b => b.MigrationsAssembly("API")));
 
 // --------------------
 // Controllers
@@ -36,64 +36,81 @@ builder.Services.AddScoped(typeof(IGenericBLL<User>), typeof(GenericBLL<User>));
 builder.Services.AddScoped<IRepository<User>, UserRepository>();
 builder.Services.AddScoped<IRepository<Client>, ClientRepository>();
 
+
+
 // Repositories
+builder.Services.AddScoped<IRepository<User>, UserRepository>();
+builder.Services.AddScoped<IRepository<Client>, ClientRepository>();
 builder.Services.AddScoped<IRepository<Cours>, CoursRepository>();
 builder.Services.AddScoped<IRepository<Soumission>, SoumissionRepository>();
 builder.Services.AddScoped<IRepository<Inscription>, InscriptionRepository>();
-builder.Services.AddScoped<IRepository<Devoir>, DevoirRepository>();
+
+// UnitOfWork
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
 
 // --------------------
 // Cours
 // --------------------
 builder.Services.AddScoped(typeof(IGenericBLL<Cours>), typeof(GenericBLL<Cours>));
+builder.Services.AddScoped<IRepository<Cours>, CoursRepository>();
 
 // --------------------
 // Soumission
 // --------------------
 builder.Services.AddScoped<ISoumissionService, SoumissionService>();
 builder.Services.AddScoped(typeof(IGenericBLL<Soumission>), typeof(GenericBLL<Soumission>));
+builder.Services.AddScoped<IRepository<Soumission>, SoumissionRepository>();
+
+
 
 builder.Services.AddScoped<CoursService>();
+builder.Services.AddScoped(typeof(IGenericBLL<Cours>), typeof(GenericBLL<Cours>));
+builder.Services.AddScoped<IRepository<Cours>, CoursRepository>();
+
 
 // --------------------
 // Inscription
 // --------------------
 builder.Services.AddScoped(typeof(IGenericBLL<Inscription>), typeof(GenericBLL<Inscription>));
+builder.Services.AddScoped<IRepository<Inscription>, InscriptionRepository>();
+builder.Services.AddScoped<InscriptionService>();
+
+
 
 builder.Services.AddScoped<DevoirService>();
 builder.Services.AddScoped(typeof(IGenericBLL<Devoir>), typeof(GenericBLL<Devoir>));
+builder.Services.AddScoped<IRepository<Devoir>, DevoirRepository>();
+
+
+// --------------------
+// Lecon
+// --------------------
+builder.Services.AddScoped<LeconService>();
+builder.Services.AddScoped(typeof(IGenericBLL<Lecon>), typeof(GenericBLL<Lecon>));
+builder.Services.AddScoped<IRepository<Lecon>, LeconRepository>();
+
 
 // --------------------
 // Swagger
 // --------------------
 builder.Services.AddSwaggerGen(c =>
 {
- c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Projet DOTNET" });
+    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Projet DOTNET" });
 });
-
-// Razor Pages
-builder.Services.AddRazorPages();
 
 // --------------------
 // Pipeline
 // --------------------
 var app = builder.Build();
 
-// Enable middleware
+app.UseAuthorization();
+app.MapControllers();
+
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
- c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V2");
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V2");
 });
 
-app.UseStaticFiles();
-app.UseRouting();
-app.UseAuthorization();
-
-// Map endpoints
-app.MapControllers();
-app.MapRazorPages();
-
-// Run app
 app.Run();
-

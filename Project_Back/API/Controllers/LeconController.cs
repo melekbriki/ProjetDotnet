@@ -1,43 +1,56 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Projet.Entities;
-using Projet.Services.Interfaces;
+using Projet.Services;
 
-[ApiController]
-[Route("api/lecons")]
-public class LeconController : ControllerBase
+namespace API.Controllers
 {
-    private readonly ILeconService _service;
-
-    public LeconController(ILeconService service)
+    [ApiController]
+    [Route("api/lecons")]
+    public class LeconController : ControllerBase
     {
-        _service = service;
-    }
+        private readonly LeconService _service;
 
-    [HttpGet]
-    public IActionResult GetAll() => Ok(_service.GetAll());
+        public LeconController(LeconService service)
+        {
+            _service = service;
+        }
 
-    [HttpGet("{id}")]
-    public IActionResult GetById(int id) => Ok(_service.GetById(id));
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            return Ok(_service.GetAll());
+        }
 
-    [HttpPost]
-    public IActionResult Add(Lecon lecon)
-    {
-        _service.Add(lecon);
-        return Ok();
-    }
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            var lecon = _service.GetById(id);
+            if (lecon == null)
+                return NotFound();
 
-    [HttpPut("{id}")]
-    public IActionResult Update(int id, Lecon lecon)
-    {
-        lecon.Id = id;
-        _service.Update(lecon);
-        return Ok();
-    }
+            return Ok(lecon);
+        }
 
-    [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
-    {
-        _service.Delete(id);
-        return Ok();
+        [HttpPost]
+        public IActionResult Add([FromBody] Lecon lecon)
+        {
+            _service.Add(lecon);
+            return Ok("Leçon ajoutée avec succès");
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, [FromBody] Lecon lecon)
+        {
+            lecon.Id = id;
+            _service.Update(lecon);
+            return Ok("Leçon modifiée avec succès");
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            _service.Delete(id);
+            return Ok("Leçon supprimée avec succès");
+        }
     }
 }
