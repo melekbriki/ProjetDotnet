@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Devoir, DevoirService } from '../../../services/devoir.service';
+import { Devoir, DevoirService } from 'src/app/shared/services/devoir.service';
 
 @Component({
   selector: 'app-devoir',
@@ -27,7 +27,7 @@ export class DevoirComponent implements OnInit {
   loadDevoirs() {
     this.devoirService.getAll().subscribe({
       next: (data) => this.devoirs = data,
-      error: () => this.message = '❌ Error loading devoirs'
+      error: () => this.message = '❌ Erreur chargement devoirs'
     });
   }
 
@@ -41,9 +41,9 @@ export class DevoirComponent implements OnInit {
       next: () => {
         this.message = '✅ Devoir ajouté avec succès';
         this.newDevoir = { titre: '', description: '', dateLimite: '' };
-        this.loadDevoirs(); // refresh list
+        this.loadDevoirs();
       },
-      error: () => this.message = '❌ Error adding devoir'
+      error: () => this.message = '❌ Erreur ajout devoir'
     });
   }
 
@@ -52,7 +52,7 @@ export class DevoirComponent implements OnInit {
 
     this.devoirService.delete(id).subscribe({
       next: () => this.loadDevoirs(),
-      error: () => this.message = '❌ Error deleting devoir'
+      error: () => this.message = '❌ Erreur suppression devoir'
     });
   }
 }

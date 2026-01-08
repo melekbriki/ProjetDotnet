@@ -3,23 +3,25 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { MainLayoutComponent } from './shared/components/main-layout/main-layout.component';
 
-// ===== Student =====
+// Student
 import { StudentDashboardComponent } from './shared/components/Student/student-dashboard/student-dashboard.component';
 import { SoumissionComponent } from './shared/components/soumission/soumission.component';
 
-// ===== Admin =====
+// Admin
 import { AdminLayoutComponent } from './shared/components/Admin/admin-layout/admin-layout.component';
 import { DevoirComponent } from './shared/components/Admin/devoir/devoir.component';
 import { AddUserComponent } from './shared/components/Admin/add-user/add-user.component';
-// import { AddCoursComponent } from './shared/components/Admin/add-cours/add-cours.component';
+
 
 const routes: Routes = [
 
-  /* ================= STUDENT (Main Layout) ================= */
+  /* ================= MAIN LAYOUT ================= */
   {
     path: '',
     component: MainLayoutComponent,
     children: [
+
+      /* -------- STUDENT -------- */
       {
         path: 'student',
         component: StudentDashboardComponent
@@ -28,6 +30,7 @@ const routes: Routes = [
         path: 'student/soumission',
         component: SoumissionComponent
       },
+
       {
         path: '',
         redirectTo: 'student',
@@ -36,7 +39,7 @@ const routes: Routes = [
     ]
   },
 
-  /* ================= ADMIN (Admin Layout) ================= */
+  /* ================= ADMIN ================= */
   {
     path: 'admin',
     component: AdminLayoutComponent,
@@ -51,7 +54,7 @@ const routes: Routes = [
       },
       {
         path: 'cours',
-        component: AddUserComponent // بدّلها AddCoursComponent كي تعمل component خاص
+        component: AddUserComponent
       },
       {
         path: '',
@@ -61,7 +64,7 @@ const routes: Routes = [
     ]
   },
 
-  /* ================= FALLBACK ================= */
+  /* ================= NOT FOUND ================= */
   {
     path: '**',
     redirectTo: 'student'

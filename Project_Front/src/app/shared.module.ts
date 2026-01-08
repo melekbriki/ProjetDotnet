@@ -12,7 +12,6 @@ import { AdminLayoutComponent } from './shared/components/Admin/admin-layout/adm
 
 import { StudentDashboardComponent } from './shared/components/Student/student-dashboard/student-dashboard.component';
 import { AdminDashboardComponent } from './shared/components/Admin/admin-dashboard/admin-dashboard.component';
-import { DevoirComponent } from './shared/components/Admin/devoir/devoir.component';
 import { SoumissionComponent } from './shared/components/soumission/soumission.component';
 
 @NgModule({
@@ -26,8 +25,9 @@ import { SoumissionComponent } from './shared/components/soumission/soumission.c
 
     StudentDashboardComponent,
     AdminDashboardComponent,
-    DevoirComponent,
-    SoumissionComponent
+   
+    SoumissionComponent,
+    
   ],
   imports: [
     CommonModule,
