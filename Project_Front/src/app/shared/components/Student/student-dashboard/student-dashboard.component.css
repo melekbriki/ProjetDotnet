@@ -1,0 +1,24 @@
+.devoir-card {
+  border-radius: 14px;
+  transition: all 0.3s ease;
+}
+
+.devoir-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+.card-title {
+  font-weight: 600;
+}
+
+.badge {
+  width: fit-content;
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+}
+
+.btn {
+  border-radius: 10px;
+}

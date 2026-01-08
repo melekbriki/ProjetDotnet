@@ -1,0 +1,40 @@
+<div class="soumission-container">
+  <h2>Soumission de devoir</h2>
+
+  <p class="message" *ngIf="message">{{ message }}</p>
+
+  <form>
+    <!-- User -->
+    <div class="form-group">
+      <label for="user">Étudiant</label>
+      <select id="user" class="form-control">
+        <option value="">-- Choisir un étudiant --</option>
+        <option *ngFor="let user of users" [value]="user.id">
+          {{ user.name }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Devoir -->
+    <div class="form-group">
+      <label for="devoir">Devoir</label>
+      <select id="devoir" class="form-control">
+        <option value="">-- Choisir un devoir --</option>
+        <option *ngFor="let devoir of devoirs" [value]="devoir.id">
+          {{ devoir.titre }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Fichier -->
+    <div class="form-group">
+      <label for="file">Fichier</label>
+      <input type="file" id="file" class="form-control" />
+    </div>
+
+    <!-- Submit -->
+    <button type="submit" class="btn-submit">
+      Soumettre
+    </button>
+  </form>
+</div>

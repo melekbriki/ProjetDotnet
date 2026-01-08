@@ -1,0 +1,30 @@
+<div class="container py-5">
+
+  <h2 class="mb-4">🧑‍🏫 Admin – Add Devoir</h2>
+
+  <div class="card p-4 shadow-sm">
+    <input
+      class="form-control mb-3"
+      placeholder="Titre"
+      [(ngModel)]="newDevoir.titre">
+
+    <textarea
+      class="form-control mb-3"
+      placeholder="Description"
+      [(ngModel)]="newDevoir.description"></textarea>
+
+    <input
+      type="date"
+      class="form-control mb-3"
+      [(ngModel)]="newDevoir.dateLimite">
+
+    <button class="btn btn-primary w-100" (click)="addDevoir()">
+      Add Devoir
+    </button>
+
+    <div class="mt-3 text-center text-success" *ngIf="message">
+      {{ message }}
+    </div>
+  </div>
+
+</div>
