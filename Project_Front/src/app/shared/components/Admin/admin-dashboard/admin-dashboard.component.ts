@@ -10,7 +10,7 @@ export class AdminDashboardComponent {
   newDevoir: Devoir = {
     titre: '',
     description: '',
-    dateLimite: ''
+    dateDevoir: ''
   };
 
   message = '';
@@ -21,7 +21,7 @@ export class AdminDashboardComponent {
     this.devoirService.add(this.newDevoir).subscribe({
       next: () => {
         this.message = '✅ Devoir added successfully';
-        this.newDevoir = { titre: '', description: '', dateLimite: '' };
+        this.newDevoir = { titre: '', description: '', dateDevoir: '' };
       },
       error: err => {
         this.message = '❌ Error: ' + err.message;

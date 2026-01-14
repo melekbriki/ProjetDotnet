@@ -12,8 +12,8 @@ using Projet.Context;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20260108175946_v2")]
-    partial class v2
+    [Migration("20260114185957_v1")]
+    partial class v1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

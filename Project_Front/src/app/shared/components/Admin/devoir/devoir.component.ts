@@ -13,7 +13,7 @@ export class DevoirComponent implements OnInit {
   newDevoir: Devoir = {
     titre: '',
     description: '',
-    dateLimite: ''
+    dateDevoir: ''
   };
 
   message = '';
@@ -32,15 +32,21 @@ export class DevoirComponent implements OnInit {
   }
 
   addDevoir() {
-    if (!this.newDevoir.titre || !this.newDevoir.dateLimite) {
+    if (!this.newDevoir.titre || !this.newDevoir.dateDevoir) {
       this.message = '⚠️ Titre et date limite obligatoires';
       return;
     }
 
-    this.devoirService.add(this.newDevoir).subscribe({
+    // Convert to ISO string to match C# DateTime
+    const devoirToSend = { 
+      ...this.newDevoir, 
+      dateDevoir: new Date(this.newDevoir.dateDevoir).toISOString() 
+    };
+
+    this.devoirService.add(devoirToSend).subscribe({
       next: () => {
         this.message = '✅ Devoir ajouté avec succès';
-        this.newDevoir = { titre: '', description: '', dateLimite: '' };
+        this.newDevoir = { titre: '', description: '', dateDevoir: '' };
         this.loadDevoirs();
       },
       error: () => this.message = '❌ Erreur ajout devoir'

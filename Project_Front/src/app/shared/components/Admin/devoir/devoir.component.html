@@ -24,7 +24,7 @@
       <div class="mb-3">
         <label class="form-label">Date limite</label>
         <input type="date" class="form-control"
-          [(ngModel)]="newDevoir.dateLimite">
+          [(ngModel)]="newDevoir.dateDevoir">
       </div>
 
       <button class="btn btn-primary" (click)="addDevoir()">
@@ -52,7 +52,7 @@
             <td>{{ d.id }}</td>
             <td>{{ d.titre }}</td>
             <td>{{ d.description }}</td>
-            <td>{{ d.dateLimite }}</td>
+            <td>{{ d.dateDevoir }}</td>
           </tr>
         </tbody>
       </table>

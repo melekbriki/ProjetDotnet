@@ -3,10 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface Devoir {
-  id?: number;
+  id?: number;           // optional, needed for delete
   titre: string;
-  description: string;
-  dateLimite: string;
+  description?: string;
+  dateDevoir: string;    // matches C# DateDevoir
 }
 
 @Injectable({
@@ -14,7 +14,7 @@ export interface Devoir {
 })
 export class DevoirService {
 
-  private apiUrl = 'http://localhost:5000/api/devoirs'; 
+  private apiUrl = 'http://localhost:5180/api/devoirs'; 
 
   constructor(private http: HttpClient) {}
 
