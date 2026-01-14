@@ -1,4 +1,4 @@
-using Projet.BLL.Contract;
+﻿using Projet.BLL.Contract;
 using Projet.BLL;
 using Projet.Context;
 using Projet.DAL;
@@ -24,6 +24,19 @@ builder.Services.AddDbContext<DataContext>(options =>
 builder.Services.AddControllers();
 
 // --------------------
+// CORS (autoriser frontend local)
+// --------------------
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:8081") // ton frontend
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
+// --------------------
 // UnitOfWork
 // --------------------
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -36,60 +49,32 @@ builder.Services.AddScoped(typeof(IGenericBLL<User>), typeof(GenericBLL<User>));
 builder.Services.AddScoped<IRepository<User>, UserRepository>();
 builder.Services.AddScoped<IRepository<Client>, ClientRepository>();
 
-
-
+// --------------------
 // Repositories
-builder.Services.AddScoped<IRepository<User>, UserRepository>();
-builder.Services.AddScoped<IRepository<Client>, ClientRepository>();
+// --------------------
 builder.Services.AddScoped<IRepository<Cours>, CoursRepository>();
 builder.Services.AddScoped<IRepository<Soumission>, SoumissionRepository>();
 builder.Services.AddScoped<IRepository<Inscription>, InscriptionRepository>();
-
-// UnitOfWork
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-
-
-// --------------------
-// Cours
-// --------------------
-builder.Services.AddScoped(typeof(IGenericBLL<Cours>), typeof(GenericBLL<Cours>));
-builder.Services.AddScoped<IRepository<Cours>, CoursRepository>();
-
-// --------------------
-// Soumission
-// --------------------
-builder.Services.AddScoped<ISoumissionService, SoumissionService>();
-builder.Services.AddScoped(typeof(IGenericBLL<Soumission>), typeof(GenericBLL<Soumission>));
-builder.Services.AddScoped<IRepository<Soumission>, SoumissionRepository>();
-
-
-
-builder.Services.AddScoped<CoursService>();
-builder.Services.AddScoped(typeof(IGenericBLL<Cours>), typeof(GenericBLL<Cours>));
-builder.Services.AddScoped<IRepository<Cours>, CoursRepository>();
-
-
-// --------------------
-// Inscription
-// --------------------
-builder.Services.AddScoped(typeof(IGenericBLL<Inscription>), typeof(GenericBLL<Inscription>));
-builder.Services.AddScoped<IRepository<Inscription>, InscriptionRepository>();
-builder.Services.AddScoped<InscriptionService>();
-
-
-
-builder.Services.AddScoped<DevoirService>();
-builder.Services.AddScoped(typeof(IGenericBLL<Devoir>), typeof(GenericBLL<Devoir>));
 builder.Services.AddScoped<IRepository<Devoir>, DevoirRepository>();
-
-
-// --------------------
-// Lecon
-// --------------------
-builder.Services.AddScoped<LeconService>();
-builder.Services.AddScoped(typeof(IGenericBLL<Lecon>), typeof(GenericBLL<Lecon>));
 builder.Services.AddScoped<IRepository<Lecon>, LeconRepository>();
+builder.Services.AddScoped<IRepository<Role>, RoleRepository>();
 
+// --------------------
+// Services
+// --------------------
+builder.Services.AddScoped<CoursService>();
+builder.Services.AddScoped<InscriptionService>();
+builder.Services.AddScoped<DevoirService>();
+builder.Services.AddScoped<LeconService>();
+builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<ISoumissionService, SoumissionService>();
+
+builder.Services.AddScoped(typeof(IGenericBLL<Cours>), typeof(GenericBLL<Cours>));
+builder.Services.AddScoped(typeof(IGenericBLL<Soumission>), typeof(GenericBLL<Soumission>));
+builder.Services.AddScoped(typeof(IGenericBLL<Inscription>), typeof(GenericBLL<Inscription>));
+builder.Services.AddScoped(typeof(IGenericBLL<Devoir>), typeof(GenericBLL<Devoir>));
+builder.Services.AddScoped(typeof(IGenericBLL<Lecon>), typeof(GenericBLL<Lecon>));
+builder.Services.AddScoped(typeof(IGenericBLL<Role>), typeof(GenericBLL<Role>));
 
 // --------------------
 // Swagger
@@ -103,6 +88,9 @@ builder.Services.AddSwaggerGen(c =>
 // Pipeline
 // --------------------
 var app = builder.Build();
+
+// ⚡ Activer CORS
+app.UseCors("AllowFrontend");
 
 app.UseAuthorization();
 app.MapControllers();

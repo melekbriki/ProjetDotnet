@@ -12,7 +12,7 @@ using Projet.Context;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20260106220656_v1")]
+    [Migration("20260108192700_v1")]
     partial class v1
     {
         /// <inheritdoc />

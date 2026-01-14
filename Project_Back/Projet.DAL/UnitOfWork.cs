@@ -14,7 +14,9 @@ namespace Projet.DAL
             IRepository<Soumission> soumissionRepo,
             IRepository<Inscription> inscriptionRepo,
             IRepository<Devoir> devoirRepo,
-            IRepository<Lecon> leconRepo
+            IRepository<Lecon> leconRepo,
+            IRepository<Role> roleRepo
+
             )
 
         {
@@ -27,6 +29,7 @@ namespace Projet.DAL
             _repositories.Add(typeof(Inscription), inscriptionRepo);
             _repositories.Add(typeof(Devoir), devoirRepo);
             _repositories.Add(typeof(Lecon), leconRepo);
+            _repositories.Add(typeof(Role), roleRepo);
 
         }
 
