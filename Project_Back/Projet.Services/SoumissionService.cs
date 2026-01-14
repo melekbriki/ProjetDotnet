@@ -31,5 +31,19 @@ namespace Projet.Services
             var soumission = _bll.GetById(id);
             _bll.Delete(soumission);
         }
+
+        // Create a new Soumission linking the user and the devoir
+        public void EnrollDevoir(int userId, int devoirId)
+        {
+            var soumission = new Soumission
+            {
+                UserId = userId,
+                DevoirId = devoirId,
+                DateSoumission = DateTime.Now,
+                Note = 0 // default note
+            };
+
+            _bll.Add(soumission);
+        }
     }
 }
