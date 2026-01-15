@@ -1,0 +1,51 @@
+<div class="container py-4">
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <div>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-1 small">
+                    <li class="breadcrumb-item"><a routerLink="/admin/courses" class="text-decoration-none">Courses</a>
+                    </li>
+                    <li class="breadcrumb-item active">{{ course?.titre }}</li>
+                </ol>
+            </nav>
+            <h2 class="fw-bold mb-0">Lessons: {{ course?.titre }}</h2>
+        </div>
+        <button class="btn btn-primary rounded-pill px-4" [routerLink]="['/admin/courses', courseId, 'lessons', 'new']">
+            <i class="bi bi-plus-lg me-2"></i> Add Lesson
+        </button>
+    </div>
+
+    <div *ngIf="loading" class="text-center py-5">
+        <div class="spinner-border text-primary" role="status"></div>
+    </div>
+
+    <div class="row g-4" *ngIf="!loading">
+        <div class="col-12" *ngFor="let lesson of lessons; let i = index">
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden lesson-card">
+                <div class="card-body p-4 d-flex align-items-center">
+                    <div class="lesson-number bg-light rounded-circle d-flex align-items-center justify-content-center me-4"
+                        style="width: 50px; height: 50px;">
+                        <span class="fw-bold text-muted">{{ i + 1 }}</span>
+                    </div>
+                    <div class="flex-grow-1">
+                        <h5 class="fw-bold mb-1">{{ lesson.titre }}</h5>
+                        <p class="text-muted small mb-0">{{ lesson.contenu | slice:0:100 }}...</p>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-light rounded-circle"
+                            [routerLink]="['/admin/courses', courseId, 'lessons', 'edit', lesson.id]">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                        <button class="btn btn-light rounded-circle text-danger" (click)="deleteLesson(lesson.id)">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 text-center py-5" *ngIf="lessons.length === 0">
+            <p class="text-muted">No lessons found. Create one to get started!</p>
+        </div>
+    </div>
+</div>

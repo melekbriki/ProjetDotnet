@@ -9,14 +9,16 @@ export interface Devoir {
   dateDevoir: string;    // matches C# DateDevoir
 }
 
+import { environment } from '../../../environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
 export class DevoirService {
 
-  private apiUrl = 'http://localhost:5180/api/devoirs'; 
+  private apiUrl = `${environment.apiUrl}/devoirs`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   // GET all devoirs (Student)
   getAll(): Observable<Devoir[]> {

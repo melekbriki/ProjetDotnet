@@ -1,0 +1,59 @@
+<div class="container-fluid" *ngIf="!loading; else loader">
+    <div class="mb-4">
+        <a routerLink="/student/courses" class="text-decoration-none text-muted small d-inline-block mb-2">
+            <i class="bi bi-arrow-left me-1"></i> Back to Courses
+        </a>
+        <h1 class="fw-bold text-dark">{{ course?.titre }}</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+                <h5 class="fw-bold mb-4">Course Lessons</h5>
+                <div class="accordion accordion-flush" id="lessonAccordion">
+                    <div class="accordion-item border-0 mb-3" *ngFor="let lesson of course?.lecons; let i = index">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed rounded-3 bg-light fw-medium" type="button"
+                                [attr.data-bs-toggle]="'collapse'" [attr.data-bs-target]="'#collapse' + i">
+                                <i class="bi bi-play-circle me-3 text-primary"></i>
+                                {{ lesson.titre }}
+                            </button>
+                        </h2>
+                        <div [id]="'collapse' + i" class="accordion-collapse collapse"
+                            data-bs-parent="#lessonAccordion">
+                            <div class="accordion-body text-muted">
+                                {{ lesson.contenu }}
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="course?.lecons?.length === 0" class="text-center py-4 text-muted">
+                        No lessons uploaded yet for this course.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+                <h5 class="fw-bold mb-3">About this Course</h5>
+                <p class="text-muted small">{{ course?.description }}</p>
+                <hr>
+                <div class="d-flex align-items-center mb-3">
+                    <div class="avatar-sm bg-info-soft text-info rounded-circle me-3">
+                        <i class="bi bi-person"></i>
+                    </div>
+                    <div>
+                        <div class="small text-muted">Instructor</div>
+                        <div class="fw-bold small">{{ course?.enseignant?.NomUser }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #loader>
+    <div class="text-center py-5">
+        <div class="spinner-border text-primary" role="status"></div>
+    </div>
+</ng-template>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Devoir, DevoirService } from 'src/app/shared/services/devoir.service';
+import { DevoirDTO } from '../../../../core/models/api-models';
+import { DevoirService } from '../../../../core/services/devoir.service';
 
 @Component({
   selector: 'app-devoir',
@@ -8,57 +9,74 @@ import { Devoir, DevoirService } from 'src/app/shared/services/devoir.service';
 })
 export class DevoirComponent implements OnInit {
 
-  devoirs: Devoir[] = [];
+  devoirs: DevoirDTO[] = [];
 
-  newDevoir: Devoir = {
+  newDevoir: DevoirDTO = {
+    id: 0,
     titre: '',
     description: '',
     dateDevoir: ''
   };
 
   message = '';
+  loading = false;
 
-  constructor(private devoirService: DevoirService) {}
+  constructor(private devoirService: DevoirService) { }
 
   ngOnInit(): void {
     this.loadDevoirs();
   }
 
   loadDevoirs() {
+    this.loading = true;
     this.devoirService.getAll().subscribe({
-      next: (data) => this.devoirs = data,
-      error: () => this.message = '❌ Erreur chargement devoirs'
+      next: (data) => {
+        this.devoirs = data;
+        this.loading = false;
+      },
+      error: () => {
+        this.message = '❌ Error loading devoirs';
+        this.loading = false;
+      }
     });
   }
 
   addDevoir() {
     if (!this.newDevoir.titre || !this.newDevoir.dateDevoir) {
-      this.message = '⚠️ Titre et date limite obligatoires';
+      this.message = '⚠️ Title and date are required';
       return;
     }
 
-    // Convert to ISO string to match C# DateTime
-    const devoirToSend = { 
-      ...this.newDevoir, 
-      dateDevoir: new Date(this.newDevoir.dateDevoir).toISOString() 
+    this.loading = true;
+    const devoirToSend = {
+      ...this.newDevoir,
+      dateDevoir: new Date(this.newDevoir.dateDevoir).toISOString()
     };
 
-    this.devoirService.add(devoirToSend).subscribe({
+    // Remove id for new devoir
+    const { id, ...cleanDevoir } = devoirToSend;
+
+    this.devoirService.add(cleanDevoir as DevoirDTO).subscribe({
       next: () => {
-        this.message = '✅ Devoir ajouté avec succès';
-        this.newDevoir = { titre: '', description: '', dateDevoir: '' };
+        this.message = '✅ Assignment added successfully';
+        this.newDevoir = { id: 0, titre: '', description: '', dateDevoir: '' };
         this.loadDevoirs();
       },
-      error: () => this.message = '❌ Erreur ajout devoir'
+      error: () => {
+        this.message = '❌ Error adding assignment';
+        this.loading = false;
+      }
     });
   }
 
   deleteDevoir(id?: number) {
     if (!id) return;
 
-    this.devoirService.delete(id).subscribe({
-      next: () => this.loadDevoirs(),
-      error: () => this.message = '❌ Erreur suppression devoir'
-    });
+    if (confirm('Are you sure you want to delete this assignment?')) {
+      this.devoirService.delete(id).subscribe({
+        next: () => this.loadDevoirs(),
+        error: () => this.message = '❌ Error deleting assignment'
+      });
+    }
   }
 }

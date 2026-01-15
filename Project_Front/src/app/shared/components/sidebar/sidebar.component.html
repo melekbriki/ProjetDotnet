@@ -1,0 +1,47 @@
+<div class="sidebar d-flex flex-column flex-shrink-0 p-3 text-white bg-dark">
+  <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+    <span class="fs-4">E-Learning</span>
+  </a>
+  <hr>
+  <ul class="nav nav-pills flex-column mb-auto">
+    <!-- Common Links -->
+
+    <!-- Admin Links -->
+    <ng-container *ngIf="(role$ | async) === 3">
+      <li>
+        <a routerLink="/admin/dashboard" class="nav-link text-white" routerLinkActive="active">
+          <i class="bi bi-speedometer2 me-2"></i> Dashboard
+        </a>
+      </li>
+      <li>
+        <a routerLink="/admin/courses" class="nav-link text-white" routerLinkActive="active">
+          <i class="bi bi-journal-bookmark me-2"></i> Courses
+        </a>
+      </li>
+      <li>
+        <a routerLink="/admin/devoirs" class="nav-link text-white" routerLinkActive="active">
+          <i class="bi bi-file-earmark-text me-2"></i> Devoirs
+        </a>
+      </li>
+      <li>
+        <a routerLink="/admin/users" class="nav-link text-white" routerLinkActive="active">
+          <i class="bi bi-people me-2"></i> Users
+        </a>
+      </li>
+    </ng-container>
+
+    <!-- Student Links -->
+    <ng-container *ngIf="(role$ | async) === 2">
+      <li>
+        <a routerLink="/student/courses" class="nav-link text-white" routerLinkActive="active">
+          <i class="bi bi-mortarboard me-2"></i> My Courses
+        </a>
+      </li>
+      <li>
+        <a routerLink="/student/dashboard" class="nav-link text-white" routerLinkActive="active">
+          <i class="bi bi-speedometer2 me-2"></i> Dashboard
+        </a>
+      </li>
+    </ng-container>
+  </ul>
+</div>

@@ -1,1 +1,45 @@
-<p>add-course works!</p>
+<div class="container-fluid">
+    <div class="mb-4">
+        <a routerLink="/admin/courses" class="text-decoration-none text-muted small mb-2 d-inline-block">
+            <i class="bi bi-arrow-left me-1"></i> Back to Courses
+        </a>
+        <h2 class="fw-bold text-dark">{{ isEdit ? 'Edit Course' : 'Create New Course' }}</h2>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-4 max-w-700">
+        <div class="card-body p-4 p-md-5">
+            <form (ngSubmit)="onSubmit()" #courseForm="ngForm">
+                <div class="mb-4">
+                    <label class="form-label fw-medium text-muted small">Course Title</label>
+                    <input type="text" class="form-control form-control-lg rounded-3 border-light bg-light"
+                        [(ngModel)]="course.titre" name="titre" required
+                        placeholder="e.g. Advanced Angular Development">
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-medium text-muted small">Description</label>
+                    <textarea class="form-control rounded-3 border-light bg-light" [(ngModel)]="course.description"
+                        name="description" rows="4" placeholder="Course overview..."></textarea>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-medium text-muted small">Assigned Teacher</label>
+                    <select class="form-select form-select-lg rounded-3 border-light bg-light"
+                        [(ngModel)]="course.enseignantId" name="enseignantId" required>
+                        <option [value]="0" disabled>Select a teacher</option>
+                        <option *ngFor="let teacher of teachers" [value]="teacher.Id">{{ teacher.NomUser }}</option>
+                    </select>
+                </div>
+
+                <div class="d-grid mt-5">
+                    <button type="submit"
+                        class="btn btn-primary d-flex align-items-center justify-content-center btn-lg rounded-3 py-3"
+                        [disabled]="!courseForm.form.valid || loading">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+                        {{ isEdit ? 'Update Course' : 'Create Course' }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

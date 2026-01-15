@@ -1,0 +1,79 @@
+<div class="register-page d-flex align-items-center justify-content-center py-5">
+    <div class="card border-0 shadow-lg rounded-4 overflow-hidden" style="width: 500px;">
+        <div class="row g-0">
+            <div class="col-12 p-5">
+                <div class="text-center mb-4">
+                    <h3 class="fw-bold mb-2">Create Account</h3>
+                    <p class="text-muted">Join our learning community today.</p>
+                </div>
+
+                <div *ngIf="success" class="alert alert-success rounded-4 border-0 p-4 text-center mb-0">
+                    <div class="display-4 mb-3"><i class="bi bi-check-circle-fill"></i></div>
+                    <h5 class="fw-bold">Success!</h5>
+                    <p class="mb-0">Registration complete. Redirecting to login...</p>
+                </div>
+
+                <form *ngIf="!success" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                    <!-- Full Name -->
+                    <div class="mb-3">
+                        <label class="form-label small fw-medium">Full Name</label>
+                        <div class="input-group">
+                            <span class="input-group-text border-0 bg-light"><i class="bi bi-person"></i></span>
+                            <input type="text" class="form-control form-control-lg rounded-end-3 border-light bg-light"
+                                formControlName="nomUser" placeholder="John Doe">
+                        </div>
+                        <div *ngIf="registerForm.get('nomUser')?.touched && registerForm.get('nomUser')?.invalid"
+                            class="text-danger small mt-1">
+                            Full name is required (min 3 chars).
+                        </div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="mb-3">
+                        <label class="form-label small fw-medium">Email Address</label>
+                        <div class="input-group">
+                            <span class="input-group-text border-0 bg-light"><i class="bi bi-envelope"></i></span>
+                            <input type="email" class="form-control form-control-lg rounded-end-3 border-light bg-light"
+                                formControlName="emailUser" placeholder="name@example.com">
+                        </div>
+                        <div *ngIf="registerForm.get('emailUser')?.touched && registerForm.get('emailUser')?.invalid"
+                            class="text-danger small mt-1">
+                            Please enter a valid email.
+                        </div>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="mb-3">
+                        <label class="form-label small fw-medium">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text border-0 bg-light"><i class="bi bi-lock"></i></span>
+                            <input type="password"
+                                class="form-control form-control-lg rounded-end-3 border-light bg-light"
+                                formControlName="motDePasse" placeholder="••••••••">
+                        </div>
+                        <div *ngIf="registerForm.get('motDePasse')?.touched && registerForm.get('motDePasse')?.invalid"
+                            class="text-danger small mt-1">
+                            Password is required (min 6 chars).
+                        </div>
+                    </div>
+
+                    <div *ngIf="error" class="alert alert-danger small rounded-3 border-0 py-2 mb-3">
+                        {{ error }}
+                    </div>
+
+                    <button type="submit"
+                        class="btn btn-primary btn-lg w-100 rounded-3 py-3 mb-3 d-flex align-items-center justify-content-center"
+                        [disabled]="registerForm.invalid || loading">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+                        Create Account
+                    </button>
+
+                    <div class="text-center">
+                        <p class="text-muted small">Already have an account? <a routerLink="/login"
+                                class="text-decoration-none fw-bold">Sign In</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

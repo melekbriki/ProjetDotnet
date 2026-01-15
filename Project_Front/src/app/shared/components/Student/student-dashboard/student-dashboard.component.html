@@ -1,45 +1,74 @@
-<div class="container py-4">
-
-  <div class="mb-4">
-    <h2 class="fw-bold">🎓 Student Dashboard</h2>
-    <p class="text-muted">Bienvenue, bon courage 💪</p>
+<div class="container-fluid">
+  <div class="row mb-4">
+    <div class="col-12">
+      <h2 class="fw-bold text-dark">Hello, Student! 👋</h2>
+      <p class="text-muted">You have <strong>{{ devoirs.length }}</strong> pending devoirs. Time to get to work!</p>
+    </div>
   </div>
 
-  <div class="row" *ngIf="devoirs.length; else empty">
-
-    <div class="col-md-6 col-lg-4 mb-4" *ngFor="let d of devoirs">
-      <div class="card h-100 shadow-sm">
-
-        <div class="card-body d-flex flex-column">
-          <h5 class="card-title">{{ d.titre }}</h5>
-
-          <p class="text-muted flex-grow-1">
-            {{ d.description }}
-          </p>
-
-          <p>
-            <strong>Deadline:</strong>
-            <span class="text-danger">
-              {{ d.dateDevoir | date:'yyyy-MM-dd' }}
-            </span>
-          </p>
-
-          <a
-            routerLink="/soumission"
-            class="btn btn-primary mt-auto w-100">
-            Submit Devoir
-          </a>
+  <div class="row">
+    <div class="col-lg-8">
+      <!-- Enrolled Courses -->
+      <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+        <h5 class="fw-bold mb-4">Available Courses</h5>
+        <div class="list-group list-group-flush">
+          <div *ngFor="let course of courses"
+            class="list-group-item border-0 px-0 py-3 d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center">
+              <div class="icon-square bg-primary-soft text-primary me-3">
+                <i class="bi bi-journal-check"></i>
+              </div>
+              <div>
+                <h6 class="mb-0 fw-bold">{{ course.titre }}</h6>
+                <small class="text-muted">Instructor: {{ course.enseignant?.NomUser }}</small>
+              </div>
+            </div>
+            <div>
+              <button class="btn btn-outline-primary btn-sm rounded-pill px-3 me-2"
+                [routerLink]="['/student/course', course.id]">
+                Study Now
+              </button>
+            </div>
+          </div>
+          <div *ngIf="courses.length === 0" class="text-center py-4 text-muted">
+            No courses available yet.
+          </div>
         </div>
+      </div>
 
+      <!-- Upcoming Devoirs -->
+      <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+        <div class="list-group list-group-flush">
+          <div *ngFor="let devoir of devoirs"
+            class="list-group-item border-0 px-0 py-3 d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center">
+              <div class="icon-square bg-warning-soft text-warning me-3">
+                <i class="bi bi-pencil-square"></i>
+              </div>
+              <div>
+                <h6 class="mb-0 fw-bold">{{ devoir.titre }}</h6>
+                <small class="text-muted">Deadline: {{ devoir.dateDevoir | date:'mediumDate' }}</small>
+              </div>
+            </div>
+            <button class="btn btn-outline-primary btn-sm rounded-pill px-3"
+              [routerLink]="['/student/devoir', devoir.id]">
+              View Details
+            </button>
+          </div>
+          <div *ngIf="devoirs.length === 0" class="text-center py-4 text-muted">
+            No upcoming devoirs. Enjoy your free time!
+          </div>
+        </div>
       </div>
     </div>
 
-  </div>
-
-  <ng-template #empty>
-    <div class="alert alert-info text-center">
-      No devoirs available 📭
+    <div class="col-lg-4">
+      <div class="card border-0 shadow-sm rounded-4 p-4 bg-primary text-white h-100">
+        <h5 class="fw-bold mb-3">Quick Tip</h5>
+        <p class="mb-4">Consistent practice is the key to mastery. Try to dedicate at least 30 minutes every day to your
+          courses.</p>
+        <button class="btn btn-light mt-auto rounded-3">Explore Courses</button>
+      </div>
     </div>
-  </ng-template>
-
+  </div>
 </div>

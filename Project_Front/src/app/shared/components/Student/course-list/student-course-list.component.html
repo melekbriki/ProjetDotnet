@@ -1,0 +1,42 @@
+<div class="container-fluid">
+    <div class="mb-5">
+        <h2 class="fw-bold text-dark">Explore Courses</h2>
+        <p class="text-muted">Browse our catalog and learn something new today.</p>
+    </div>
+
+    <div class="row g-4" *ngIf="!loading; else loader">
+        <div class="col-md-6 col-xl-4" *ngFor="let course of courses">
+            <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden course-card">
+                <div class="course-header p-4 bg-primary text-white position-relative">
+                    <div class="badge bg-white text-primary rounded-pill mb-2 px-3 py-2 fw-bold">Active</div>
+                    <h4 class="mb-0 fw-bold">{{ course.titre }}</h4>
+                </div>
+                <div class="card-body p-4 d-flex flex-column">
+                    <p class="text-muted flex-grow-1 small mb-4">{{ course.description }}</p>
+
+                    <div class="d-flex align-items-center justify-content-between pt-3 border-top mt-auto">
+                        <div class="d-flex align-items-center text-muted small">
+                            <i class="bi bi-clock me-2"></i>
+                            <span>Self-Paced</span>
+                        </div>
+
+                        <button class="btn btn-primary rounded-pill px-4" [routerLink]="['/student/course', course.id]">
+                            View Course
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="courses.length === 0" class="col-12 text-center py-5">
+            <div class="display-1 text-muted opacity-25 mb-3"><i class="bi bi-journal-x"></i></div>
+            <h4 class="text-muted">No courses available yet.</h4>
+        </div>
+    </div>
+
+    <ng-template #loader>
+        <div class="text-center py-5">
+            <div class="spinner-border text-primary" role="status"></div>
+        </div>
+    </ng-template>
+</div>

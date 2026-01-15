@@ -1,40 +1,62 @@
-<div class="soumission-container">
-  <h2>Soumission de devoir</h2>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+        <div class="bg-primary p-4 text-white">
+          <h3 class="mb-1">{{ devoir?.titre }}</h3>
+          <p class="mb-0 text-white-50">Submit your work for this assignment</p>
+        </div>
 
-  <p class="message" *ngIf="message">{{ message }}</p>
+        <div class="card-body p-4 p-md-5">
+          <div *ngIf="loading" class="text-center py-5">
+            <div class="spinner-border text-primary" role="status"></div>
+          </div>
 
-  <form>
-    <!-- User -->
-    <div class="form-group">
-      <label for="user">Étudiant</label>
-      <select id="user" class="form-control">
-        <option value="">-- Choisir un étudiant --</option>
-        <option *ngFor="let user of users" [value]="user.id">
-          {{ user.name }}
-        </option>
-      </select>
+          <div *ngIf="!loading && devoir">
+            <div class="mb-4">
+              <h5 class="fw-bold mb-3">Assignment Description</h5>
+              <div class="p-3 bg-light rounded-3 text-muted">
+                {{ devoir.description }}
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <h5 class="fw-bold mb-3">Due Date</h5>
+              <div class="d-flex align-items-center text-danger fw-medium">
+                <i class="bi bi-clock-fill me-2"></i>
+                {{ devoir.dateDevoir | date:'longDate' }}
+              </div>
+            </div>
+
+            <hr class="my-5">
+
+            <div *ngIf="!success; else successMessage">
+              <div class="mb-4 text-center">
+                <p class="text-muted">Click the button below to submit your assignment. Note that you can only submit
+                  once.</p>
+              </div>
+
+              <div class="d-grid mt-4">
+                <button (click)="submitDevoir()"
+                  class="btn btn-primary d-flex align-items-center justify-content-center btn-lg rounded-3 py-3"
+                  [disabled]="submitting">
+                  <span *ngIf="submitting" class="spinner-border spinner-border-sm me-2"></span>
+                  <i class="bi bi-cloud-arrow-up me-2" *ngIf="!submitting"></i>
+                  Confirm Submission
+                </button>
+              </div>
+            </div>
+
+            <ng-template #successMessage>
+              <div class="text-center py-4">
+                <div class="display-1 text-success mb-3"><i class="bi bi-check-circle-fill"></i></div>
+                <h3 class="fw-bold">Submission Successful!</h3>
+                <p class="text-muted">Your assignment has been received. Redirecting you to dashboard...</p>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <!-- Devoir -->
-    <div class="form-group">
-      <label for="devoir">Devoir</label>
-      <select id="devoir" class="form-control">
-        <option value="">-- Choisir un devoir --</option>
-        <option *ngFor="let devoir of devoirs" [value]="devoir.id">
-          {{ devoir.titre }}
-        </option>
-      </select>
-    </div>
-
-    <!-- Fichier -->
-    <div class="form-group">
-      <label for="file">Fichier</label>
-      <input type="file" id="file" class="form-control" />
-    </div>
-
-    <!-- Submit -->
-    <button type="submit" class="btn-submit">
-      Soumettre
-    </button>
-  </form>
+  </div>
 </div>

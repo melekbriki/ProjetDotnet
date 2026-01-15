@@ -1,24 +1,28 @@
-.devoir-card {
-  border-radius: 14px;
-  transition: all 0.3s ease;
-}
-
-.devoir-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
-}
-
-.card-title {
-  font-weight: 600;
-}
-
-.badge {
-  width: fit-content;
-  padding: 6px 12px;
+.icon-square {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 12px;
-  font-size: 0.85rem;
 }
 
-.btn {
-  border-radius: 10px;
+.bg-warning-soft {
+  background-color: rgba(255, 193, 7, 0.1);
+}
+
+.text-warning {
+  color: #ffc107 !important;
+}
+
+.card.bg-primary {
+  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%) !important;
+}
+
+.list-group-item {
+  transition: background-color 0.2s;
+}
+
+.list-group-item:hover {
+  background-color: #f8f9fa;
 }

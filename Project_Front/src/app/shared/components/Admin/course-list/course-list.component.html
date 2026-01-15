@@ -1,0 +1,64 @@
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold text-dark">Course Management</h2>
+            <p class="text-muted">Manage all available courses on the platform.</p>
+        </div>
+        <button class="btn btn-primary rounded-3 px-4 py-2" routerLink="/admin/courses/add">
+            <i class="bi bi-plus-lg me-2"></i> Add New Course
+        </button>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0 align-middle">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4">Course Title</th>
+                            <th>Description</th>
+                            <th>Enseignant</th>
+                            <th class="text-center">Lessons</th>
+                            <th class="text-end pe-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let course of courses">
+                            <td class="ps-4 fw-medium">{{ course.titre }}</td>
+                            <td class="text-muted small text-truncate" style="max-width: 250px;">{{ course.description
+                                }}</td>
+                            <td>
+                                <span class="badge bg-info-soft text-info rounded-pill px-3">
+                                    {{ course.enseignant?.NomUser || 'N/A' }}
+                                </span>
+                            </td>
+                            <td class="text-center">{{ course.lecons?.length || 0 }}</td>
+                            <td class="text-end pe-4">
+                                <button class="btn btn-icon text-info me-2"
+                                    [routerLink]="['/admin/courses', course.id, 'lessons']" title="Manage Lessons">
+                                    <i class="bi bi-book"></i>
+                                </button>
+                                <button class="btn btn-icon text-primary me-2"
+                                    [routerLink]="['/admin/courses/edit', course.id]">
+                                    <i class="bi bi-pencil-square"></i>
+                                </button>
+                                <button class="btn btn-icon text-danger" (click)="deleteCourse(course.id)">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr *ngIf="courses.length === 0 && !loading">
+                            <td colspan="5" class="text-center py-5 text-muted">No courses found.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="loading" class="d-flex justify-content-center p-5">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+</div>

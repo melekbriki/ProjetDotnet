@@ -31,20 +31,27 @@ public class AuthService
 
 
 
-public void Register(RegisterDto dto)
+    public void Register(RegisterDto dto)
     {
-        var roleUser = _context.Set<Role>()
-            .FirstOrDefault(r => r.Name == "STUDENT");
+        // 1. Cherche si le rôle ADMIN existe
+        var adminRole = _context.Set<Role>()
+            .FirstOrDefault(r => r.Name == "ADMIN");
 
-        if (roleUser == null)
-            throw new Exception("Rôle USER inexistant");
+        // 2. S'il n'existe pas, on le crée
+        if (adminRole == null)
+        {
+            adminRole = new Role { Name = "ADMIN" };
+            _context.Set<Role>().Add(adminRole);
+            _context.SaveChanges(); // Sauvegarde pour avoir l'ID
+        }
 
+        // 3. Crée l'utilisateur avec le rôle ADMIN
         var user = new User
         {
             NomUser = dto.NomUser,
             EmailUser = dto.EmailUser,
             MotDePasse = dto.MotDePasse,
-            RoleId = roleUser.Id   // ✅ ICI est la solution
+            RoleId = adminRole.Id
         };
 
         _context.Users.Add(user);

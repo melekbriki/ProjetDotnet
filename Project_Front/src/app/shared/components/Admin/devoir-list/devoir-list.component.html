@@ -1,0 +1,61 @@
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold text-dark">Devoir Management</h2>
+            <p class="text-muted">Create and assign devoirs to courses.</p>
+        </div>
+        <button class="btn btn-primary rounded-3 px-4 py-2" routerLink="/admin/devoirs/add">
+            <i class="bi bi-plus-lg me-2"></i> Create Devoir
+        </button>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0 align-middle">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4">Titre</th>
+                            <th>Description</th>
+                            <th>Deadline</th>
+                            <th class="text-end pe-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let devoir of devoirs">
+                            <td class="ps-4">
+                                <h6 class="mb-0 fw-bold">{{ devoir.titre }}</h6>
+                                <p class="text-muted small mb-0 text-truncate" style="max-width: 250px;">{{
+                                    devoir.description }}</p>
+                            </td>
+                            <td>
+                                <span class="text-dark small">
+                                    <i class="bi bi-calendar-event me-1"></i> {{ devoir.dateDevoir | date:'mediumDate'
+                                    }}
+                                </span>
+                            </td>
+                            <td class="text-end pe-4">
+                                <button class="btn btn-icon text-primary me-2"
+                                    [routerLink]="['/admin/devoirs/edit', devoir.id]">
+                                    <i class="bi bi-pencil-square"></i>
+                                </button>
+                                <button class="btn btn-icon text-danger" (click)="deleteDevoir(devoir.id)">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr *ngIf="devoirs.length === 0 && !loading">
+                            <td colspan="4" class="text-center py-5 text-muted">No devoirs found.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="loading" class="d-flex justify-content-center p-5">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+</div>

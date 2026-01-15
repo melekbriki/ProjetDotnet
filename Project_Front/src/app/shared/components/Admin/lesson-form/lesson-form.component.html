@@ -1,0 +1,48 @@
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                <div class="card-body p-5">
+                    <h3 class="fw-bold mb-4">{{ isEdit ? 'Edit Lesson' : 'Add New Lesson' }}</h3>
+
+                    <form [formGroup]="lessonForm" (ngSubmit)="onSubmit()">
+                        <!-- Title -->
+                        <div class="mb-4">
+                            <label class="form-label small fw-medium text-muted">Lesson Title</label>
+                            <input type="text" class="form-control form-control-lg rounded-3" formControlName="titre"
+                                placeholder="e.g. Introduction to Variables">
+                            <div *ngIf="lessonForm.get('titre')?.touched && lessonForm.get('titre')?.invalid"
+                                class="text-danger small mt-1">
+                                Title is required (min 3 chars).
+                            </div>
+                        </div>
+
+                        <!-- Content -->
+                        <div class="mb-4">
+                            <label class="form-label small fw-medium text-muted">Content</label>
+                            <textarea class="form-control rounded-3" rows="6" formControlName="contenu"
+                                placeholder="Enter lesson content here..."></textarea>
+                            <div *ngIf="lessonForm.get('contenu')?.touched && lessonForm.get('contenu')?.invalid"
+                                class="text-danger small mt-1">
+                                Content is required.
+                            </div>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="d-flex justify-content-end gap-2">
+                            <button type="button" class="btn btn-light rounded-pill px-4"
+                                [routerLink]="['/admin/courses', courseId, 'lessons']">
+                                Cancel
+                            </button>
+                            <button type="submit" class="btn btn-primary rounded-pill px-4"
+                                [disabled]="lessonForm.invalid || loading">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+                                {{ isEdit ? 'Update Lesson' : 'Create Lesson' }}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
